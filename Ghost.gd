@@ -1,12 +1,14 @@
 extends Area2D
 
-enum Direction { LEFT, RIGHT, UP, DOWN  }
+enum Direction { LEFT=0, RIGHT=1, UP=2, DOWN=3  }
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 var speed = 200
 var screen_size
 var direction = Direction.RIGHT
+var runtime = 0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -56,5 +58,17 @@ func _process(delta):
 			Direction.DOWN:
 				direction= Direction.LEFT
 				
-		
-		
+	runtime = runtime + delta
+	if runtime > 1:
+		runtime = 0
+		direction = Direction.LEFT
+		var zufall = randi()%4
+		match zufall:
+			0:
+				direction = Direction.LEFT
+			1:
+				direction = Direction.RIGHT
+			2:
+				direction = Direction.DOWN
+			3:
+				direction = Direction.UP
